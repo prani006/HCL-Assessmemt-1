@@ -1,0 +1,92 @@
+import java.util.Scanner;
+
+class Employee {
+    protected String employeeName;
+
+    Employee(String employeeName) {
+        this.employeeName = employeeName;
+    }
+
+    double calculateBonus() {
+        return 0.0;
+    }
+
+    double calculateBonus(double amount) {
+        return 0.0;
+    }
+}
+
+class TechnicalEmployee extends Employee {
+    private double basicSalary;
+    private int rating;
+
+    TechnicalEmployee(String employeeName, double basicSalary, int rating) {
+        super(employeeName);
+        this.basicSalary = basicSalary;
+        this.rating = rating;
+    }
+
+    @Override
+    double calculateBonus() {
+        return basicSalary * rating * 2.0 / 100.0;
+    }
+
+    double calculateBonus(double salary, int employeeRating) {
+        return salary * employeeRating * 2.0 / 100.0;
+    }
+
+    double getBasicSalary() {
+        return basicSalary;
+    }
+}
+
+class SalesEmployee extends Employee {
+    private double salesAmount;
+
+    SalesEmployee(String employeeName, double salesAmount) {
+        super(employeeName);
+        this.salesAmount = salesAmount;
+    }
+
+    @Override
+    double calculateBonus() {
+        return salesAmount * 3.0 / 100.0;
+    }
+
+    @Override
+    double calculateBonus(double amount) {
+        return amount * 3.0 / 100.0;
+    }
+
+    double getSalesAmount() {
+        return salesAmount;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int employeeType = sc.nextInt();
+        String name = sc.next();
+
+        Employee employee;
+        double earnings;
+
+        if (employeeType == 1) {
+            double basicSalary = sc.nextDouble();
+            int rating = sc.nextInt();
+            employee = new TechnicalEmployee(name, basicSalary, rating);
+            earnings = basicSalary;
+        } else {
+            double salesAmount = sc.nextDouble();
+            employee = new SalesEmployee(name, salesAmount);
+            earnings = salesAmount;
+        }
+
+        double bonus = employee.calculateBonus();
+        System.out.println("Employee Name: " + name);
+        System.out.printf("Bonus: %.2f%n", bonus);
+        System.out.printf("Total Earnings: %.2f%n", earnings + bonus);
+        sc.close();
+    }
+}
