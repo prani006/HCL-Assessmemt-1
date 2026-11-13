@@ -1,0 +1,71 @@
+import java.util.Scanner;
+
+interface AccessControl {
+    String getRole();
+    int getAccessLevel();
+    boolean canAccess(int requiredLevel);
+}
+
+class Developer implements AccessControl {
+    public String getRole() {
+        return "Developer";
+    }
+
+    public int getAccessLevel() {
+        return 1;
+    }
+
+    public boolean canAccess(int requiredLevel) {
+        return getAccessLevel() >= requiredLevel;
+    }
+}
+
+class Manager implements AccessControl {
+    public String getRole() {
+        return "Manager";
+    }
+
+    public int getAccessLevel() {
+        return 2;
+    }
+
+    public boolean canAccess(int requiredLevel) {
+        return getAccessLevel() >= requiredLevel;
+    }
+}
+
+class Administrator implements AccessControl {
+    public String getRole() {
+        return "Administrator";
+    }
+
+    public int getAccessLevel() {
+        return 3;
+    }
+
+    public boolean canAccess(int requiredLevel) {
+        return getAccessLevel() >= requiredLevel;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int roleType = sc.nextInt();
+        int requiredLevel = sc.nextInt();
+
+        AccessControl access;
+        if (roleType == 1) {
+            access = new Developer();
+        } else if (roleType == 2) {
+            access = new Manager();
+        } else {
+            access = new Administrator();
+        }
+
+        System.out.println("Role: " + access.getRole());
+        System.out.println("Access Level: " + access.getAccessLevel());
+        System.out.println("Can Access: " + access.canAccess(requiredLevel));
+        sc.close();
+    }
+}
